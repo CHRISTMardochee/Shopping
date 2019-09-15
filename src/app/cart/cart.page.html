@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mon Panier</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-list>
+      <ion-item *ngFor="let article of cartItems;let i=index">
+        <ion-thumbnail item-left>
+          <img [src]="article.item.pictures[0]" (click)="showImage(article.item.pictures[0], $event)">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{article.item.title}}</h2>
+          <p>
+            <ion-badge color="secondary">{{article.qty}}</ion-badge> x {{article.item.price | currency}}
+          </p>
+          <p *ngIf="article.item.availability.feed">Livraison: {{article.item.availability.feed}}</p>
+          <p> Total : {{((article.qty * article.item.price) + article.item.availability.feed) | currency}} </p>
+          <ion-button>
+            <ion-icon name="mail"></ion-icon>&nbsp;
+            Contacter
+          </ion-button>
+          <ion-button (click)="removeItem(article,i)" item-right clear icon-only color="danger">
+            <ion-icon name="remove-circle"></ion-icon>
+          </ion-button>
+        </ion-label>
+      </ion-item> 
+    </ion-list>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button size="default" expand="block" (click)="closeModal()">Fermer</ion-button>
+        </ion-col> 
+        <ion-col>
+          <ion-button size="default" fill="outline" expand="block" >Panier : {{total | currency}} </ion-button>
+        </ion-col>   
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
